@@ -5,7 +5,7 @@
 #include <shared_mutex>
 
 #include "message_handler.h"
-#include "coke/http_server.h"
+#include "coke/http/http_server.h"
 
 struct MessageServerParams {
     coke::HttpServerParams http_params;

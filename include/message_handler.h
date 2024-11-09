@@ -110,7 +110,7 @@ private:
     std::string topic;
     FixedQueue que;
     std::mutex mtx;
-    coke::TimedCondition cv;
+    coke::Condition cv;
 };
 
 #endif // MESSAGE_HANDLER_H
