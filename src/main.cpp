@@ -3,7 +3,7 @@
 #include <csignal>
 
 #include "coke/tools/option_parser.h"
-#include "log/log.h"
+#include "klog/klog.h"
 
 #include "message_server.h"
 
@@ -54,21 +54,21 @@ int main(int argc, char *argv[]) {
     signal(SIGINT, sighandler);
 
     if (server.start(port) == 0) {
-        LOG_INFO("ServerStart port:{}", port);
+        KLOG_INFO("ServerStart port:{}", port);
 
         run_flag.wait(true, std::memory_order_relaxed);
 
-        LOG_INFO("ServerStop shutdown server");
+        KLOG_INFO("ServerStop shutdown server");
         server.shutdown();
 
-        LOG_INFO("ServerStop wait finish");
+        KLOG_INFO("ServerStop wait finish");
         server.wait_finish();
 
-        LOG_INFO("ServerStop done");
+        KLOG_INFO("ServerStop done");
         return 0;
     }
     else {
-        LOG_INFO("ServerStartFailed port:{} errno:{}", port, (int)errno);
+        KLOG_INFO("ServerStartFailed port:{} errno:{}", port, (int)errno);
         return 1;
     }
 }

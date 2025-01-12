@@ -2,7 +2,7 @@
 
 #include "message_server.h"
 
-#include "log/log.h"
+#include "klog/klog.h"
 #include "workflow/HttpUtil.h"
 
 void string_tolower(std::string &str) {
@@ -182,13 +182,13 @@ MessageServer::process_create(coke::HttpServerContext &ctx, RequestParams &p) {
     if (success) {
         protocol::HttpUtil::set_response_status(&resp, 200);
 
-        LOG_INFO("ProcessCreate 200 topic:{} que_size:{}", p.topic, p.que_size);
+        KLOG_INFO("ProcessCreate 200 topic:{} que_size:{}", p.topic, p.que_size);
     }
     else {
         protocol::HttpUtil::set_response_status(&resp, 400);
         resp.append_output_body(error);
 
-        LOG_WARN("ProcessCreate 400 topic:{} err:{}", p.topic, error);
+        KLOG_WARN("ProcessCreate 400 topic:{} err:{}", p.topic, error);
     }
 
     co_return;
@@ -220,13 +220,13 @@ MessageServer::process_put(coke::HttpServerContext &ctx, RequestParams &p) {
     if (success) {
         protocol::HttpUtil::set_response_status(&resp, 200);
 
-        LOG_INFO("ProcessPut 200 topic:{}", p.topic);
+        KLOG_INFO("ProcessPut 200 topic:{}", p.topic);
     }
     else {
         protocol::HttpUtil::set_response_status(&resp, 400);
         resp.append_output_body(error);
 
-        LOG_WARN("ProcessPut 400 topic:{} err:{}", p.topic, error);
+        KLOG_WARN("ProcessPut 400 topic:{} err:{}", p.topic, error);
     }
 
     co_return;
@@ -271,14 +271,14 @@ MessageServer::process_get(coke::HttpServerContext &ctx, RequestParams &p) {
         if (!msgs.empty())
             first_off = msgs[0].offset;
 
-        LOG_INFO("ProcessGet 200 topic:{} offset:{} msgs:{} timeout:{}",
+        KLOG_INFO("ProcessGet 200 topic:{} offset:{} msgs:{} timeout:{}",
                  p.topic, first_off, msgs.size(), p.timeout);
     }
     else {
         protocol::HttpUtil::set_response_status(&resp, 400);
         resp.append_output_body(error);
 
-        LOG_WARN("ProcessGet 400 topic:{} err:{}", p.topic, error);
+        KLOG_WARN("ProcessGet 400 topic:{} err:{}", p.topic, error);
     }
 
     co_return;
@@ -295,12 +295,12 @@ MessageServer::process_delete(coke::HttpServerContext &ctx, RequestParams &p) {
         protocol::HttpUtil::set_response_status(&resp, 400);
         resp.append_output_body(error);
 
-        LOG_WARN("ProcessDelete 400 topic:{} err:{}", p.topic, error);
+        KLOG_WARN("ProcessDelete 400 topic:{} err:{}", p.topic, error);
     }
     else {
         protocol::HttpUtil::set_response_status(&resp, 200);
 
-        LOG_INFO("ProcessDelete 200 topic:{}", p.topic);
+        KLOG_INFO("ProcessDelete 200 topic:{}", p.topic);
     }
 
     co_return;

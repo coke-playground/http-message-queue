@@ -2,7 +2,7 @@ load('@bazel_tools//tools/build_defs/repo:git.bzl', 'git_repository')
 
 def http_message_queue_workspace(workflow_tag=None, workflow_commit=None, workflow_path=None,
                                  coke_tag=None, coke_commit=None, coke_path=None,
-                                 common_commit=None):
+                                 klog_tag=None, klog_commit=None):
     if workflow_path:
         native.local_repository(
             name = "workflow",
@@ -29,9 +29,10 @@ def http_message_queue_workspace(workflow_tag=None, workflow_commit=None, workfl
             commit = coke_commit,
         )
 
-    if common_commit:
+    if klog_tag or klog_commit:
         git_repository(
-            name = "common",
-            remote = "https://github.com/coke-playground/common.git",
-            commit = common_commit,
+            name = "klog",
+            remote = "https://github.com/coke-playground/klog.git",
+            tag = klog_tag,
+            commit = klog_commit,
         )
